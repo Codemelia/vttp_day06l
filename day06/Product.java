@@ -1,13 +1,13 @@
 package day06;
 
-public class Project {
+public class Product {
     
     private Long id;
     private String name;
     private String description;
     private String category;
 
-    public Project(Long id, String name, String description, String category) {
+    public Product(Long id, String name, String description, String category) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -42,6 +42,13 @@ public class Project {
     @Override
     public String toString() {
         return "Project [id=" + id + ", name=" + name + ", description=" + description + ", category=" + category + "]";
+       
+       // csv format
+       // return id + ", " + name + "," + description + ", " + category;
+    }
+
+    public void print() {
+        System.out.println(toString());
     }
 
 }
