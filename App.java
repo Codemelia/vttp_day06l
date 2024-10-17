@@ -10,7 +10,12 @@
 
 // run jar
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import day06.MyImplementation;
+import day06.Person;
 import day06.Product;
 
 public class App {
@@ -54,7 +60,7 @@ public class App {
         es1.execute(my5);
         es1.shutdown(); // To release memory */
 
-        List<Product> products = new ArrayList<Product>();
+        /* List<Product> products = new ArrayList<Product>();
         products.add(new Product(1L, "Apple iPad", "Apple tablet", "computer"));
         products.add(new Product(2L, "Apple Macbook Pro", "Apple laptop", "computer"));
         products.add(new Product(3L, "Logitech Mouse", "Mouse", "computer"));
@@ -64,11 +70,11 @@ public class App {
         products.add(new Product(7L, "Galaxy 24", "Samsung phone", "mobile"));
         products.add(new Product(8L, "iPhone 15", "Apple phone", "mobile"));
 
-        /* products.forEach(prod -> {
+        products.forEach(prod -> {
             System.out.println(prod.toString());
         }); */
 
-        products.forEach(Product::print);
+        /* products.forEach(Product::print);
 
         System.out.println("----------------------------\n");
 
@@ -81,8 +87,39 @@ public class App {
         .filter(p -> p.getCategory().equals("mobile"))
         .collect(Collectors.toList());
         
-        filteredProducts.forEach(Product::print);
+        filteredProducts.forEach(Product::print); */
 
+        LocalDate ld = LocalDate.of(1990, 1, 12);
+        Date currentDate = Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+        List<Person> persons = new LinkedList<>();
+        persons.add(new Person(1L, "Bernard", "Tan", 30000.0, currentDate));
+        persons.add(new Person(2L, "James", "Wong", 39000.0, currentDate));
+        persons.add(new Person(3L, "Clint", "Poon", 28000.0, currentDate));
+        persons.add(new Person(4L, "Leo", "Shen", 27500.0, currentDate));
+        persons.add(new Person(5L, "Bruce", "Wayne", 31000.0, currentDate));
+        persons.add(new Person(6L, "Mei", "Chan", 30000.0, currentDate));
+        persons.add(new Person(7L, "Paula", "Ronald", 31500.0, currentDate));
+        persons.add(new Person(8L, "Trixie", "Tan", 30500.0, currentDate));
+
+        // sort single column
+        Comparator<Person> compare = Comparator.comparing(p -> p.getFirstName());
+
+        // ascending order
+        persons.sort(compare);
+        persons.forEach(p -> {
+            System.out.println(p.toString());
+        });
+
+        // sort multiple columns
+        Comparator<Person> compareMultiple = Comparator.comparing(Person::getFirstName)
+        .thenComparing(Person::getLastName);
+
+        // descending order
+        persons.sort(compareMultiple.reversed());
+        persons.forEach(p -> {
+            System.out.println(p.toString());
+        });
+        
     }
 }
